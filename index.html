@@ -146,17 +146,58 @@
     }
 
 
-    function onScanSuccess(decodedText, decodedResult) {
+let sedangDiproses = false;
 
-      console.log("QR berhasil dibaca:", decodedText);
+function onScanSuccess(decodedText, decodedResult) {
 
-      // Hentikan scanner setelah berhasil membaca
-      html5QrcodeScanner.clear();
+  // Mencegah QR terbaca berkali-kali
+  if (sedangDiproses) {
+    return;
+  }
 
-      // Tampilkan token
-      tampilkanHasil(decodedText);
+  sedangDiproses = true;
 
-    }
+  // Bersihkan token
+  const token = decodedText.trim();
+
+  // Tampilkan hasil sementara
+  tampilkanHasil(token);
+
+  // Tampilkan pesan
+  document.querySelector(".instruction").textContent =
+    "Memeriksa data pemilih...";
+
+  // Hentikan scanner
+  html5QrcodeScanner.clear()
+    .then(() => {
+
+      // URL Web App Apps Script
+      const webAppUrl =
+        "https://script.google.com/macros/s/AKfycbwyN0v-RSWU3VSNC7MmpJiZPcmSj2VsZN3MHmYA4ol1sDF8Nirx6DS2UrUaM_e5EVgqCw/exec";
+
+      // Pindahkan ke Apps Script dengan token
+      window.location.href =
+        webAppUrl +
+        "?token=" +
+        encodeURIComponent(token);
+
+    })
+    .catch((error) => {
+
+      console.error(error);
+
+      // Tetap lanjut ke validasi
+      const webAppUrl =
+        "https://script.google.com/macros/s/AKfycbwyN0v-RSWU3VSNC7MmpJiZPcmSj2VsZN3MHmYA4ol1sDF8Nirx6DS2UrUaM_e5EVgqCw/exec";
+
+      window.location.href =
+        webAppUrl +
+        "?token=" +
+        encodeURIComponent(token);
+
+    });
+
+}
 
 
     function onScanFailure(error) {
