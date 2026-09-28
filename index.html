@@ -1,235 +1,936 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>E-Voting OSIS</title>
 
-  <!-- Library QR Scanner -->
-  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+  <!-- =========================================
+       LIBRARY QR SCANNER
+  ========================================== -->
+
+  <script
+    src="https://unpkg.com/html5-qrcode"
+    type="text/javascript">
+  </script>
+
 
   <style>
+
+    /* =========================================
+       FONT
+    ========================================== */
+
+    @font-face {
+      font-family: "Brice";
+      src: url("./fonts/BriceBoldCondensed.woff2")
+           format("woff2");
+
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+
+    @font-face {
+      font-family: "Sergio";
+      src: url("./fonts/SergioTrendy.woff2")
+           format("woff2");
+
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+
+
+    /* =========================================
+       RESET
+    ========================================== */
+
     * {
       box-sizing: border-box;
     }
 
+
+    html,
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      min-height: 100vh;
+      padding: 0;
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      padding: 20px;
+      width: 100%;
+      min-height: 100%;
     }
 
-    .card {
-      background: white;
+
+
+    /* =========================================
+       BODY / BACKGROUND
+    ========================================== */
+
+    body {
+
+      min-height: 100vh;
+
+      font-family: Arial, sans-serif;
+
+      background-image:
+
+        linear-gradient(
+          rgba(26, 62, 180, 0.08),
+          rgba(26, 62, 180, 0.08)
+        ),
+
+        url("./assets/bg-osis.jpeg");
+
+      background-size: cover;
+
+      background-position:
+        center center;
+
+      background-repeat: no-repeat;
+
+      background-attachment: fixed;
+
+      color: white;
+
+      overflow-x: hidden;
+    }
+
+
+
+    /* =========================================
+       HALAMAN UTAMA
+    ========================================== */
+
+    .page {
+
+      min-height: 100vh;
+
       width: 100%;
-      max-width: 550px;
 
-      padding: 30px;
+      display: flex;
 
-      border-radius: 20px;
+      flex-direction: column;
+
+      align-items: center;
+
+      padding:
+
+        28px
+        20px
+        40px;
+    }
+
+
+
+    /* =========================================
+       HEADER
+    ========================================== */
+
+    .header {
+
+      width: 100%;
+
+      max-width: 850px;
 
       text-align: center;
 
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      color: white;
+
+      text-shadow:
+
+        3px 3px 0
+        rgba(16, 49, 145, 0.75),
+
+        0 5px 15px
+        rgba(0, 0, 0, 0.25);
+
+      margin-bottom: 20px;
     }
 
-    h1 {
-      margin-top: 0;
-      margin-bottom: 8px;
+
+
+    .header-small {
+
+      font-size: 14px;
+
+      font-weight: 700;
+
+      letter-spacing: 5px;
+
+      margin-bottom: 3px;
     }
+
+
+
+    .header h1 {
+
+      margin: 0;
+
+      font-family:
+        "Brice",
+        Impact,
+        "Arial Narrow",
+        sans-serif;
+
+      font-size:
+        clamp(
+          58px,
+          9vw,
+          105px
+        );
+
+      line-height: 0.88;
+
+      letter-spacing: 2px;
+
+      color: white;
+
+      -webkit-text-stroke:
+        2px #173da8;
+    }
+
+
+
+    .header-subtitle {
+
+      margin-top: 13px;
+
+      font-family:
+        "Sergio",
+        Georgia,
+        serif;
+
+      font-size:
+        clamp(
+          24px,
+          4vw,
+          45px
+        );
+
+      line-height: 1;
+
+      color: white;
+
+      -webkit-text-stroke:
+        1px #173da8;
+    }
+
+
 
     .school {
-      margin-top: 0;
-      color: #555;
-      margin-bottom: 25px;
+
+      margin-top: 9px;
+
+      font-family:
+        "Sergio",
+        Georgia,
+        serif;
+
+      font-size:
+        clamp(
+          18px,
+          2.8vw,
+          30px
+        );
+
+      color: white;
+
+      -webkit-text-stroke:
+        0.7px #173da8;
     }
+
+
+
+    /* =========================================
+       SCANNER CARD
+    ========================================== */
+
+    .scanner-card {
+
+      width: 100%;
+
+      max-width: 480px;
+
+      padding: 22px;
+
+      background:
+        rgba(255, 255, 255, 0.94);
+
+      border-radius: 28px;
+
+      box-shadow:
+
+        0 20px 60px
+        rgba(0, 0, 0, 0.28);
+
+      color: #173da8;
+
+      text-align: center;
+
+      backdrop-filter: blur(8px);
+
+      -webkit-backdrop-filter: blur(8px);
+
+      border:
+        2px solid
+        rgba(255, 255, 255, 0.85);
+    }
+
+
+
+    /* =========================================
+       JUDUL SCANNER
+    ========================================== */
+
+    .scanner-title {
+
+      font-family:
+        "Brice",
+        Impact,
+        "Arial Narrow",
+        sans-serif;
+
+      font-size: 32px;
+
+      line-height: 1;
+
+      letter-spacing: 1px;
+
+      margin-bottom: 16px;
+
+      color: #173da8;
+    }
+
+
+
+    /* =========================================
+       QR READER
+    ========================================== */
 
     #reader {
+
       width: 100%;
-      max-width: 450px;
-      margin: auto;
+
+      max-width: 430px;
+
+      margin: 0 auto;
+
+      overflow: hidden;
+
+      border-radius: 18px;
+
+      background: white;
     }
+
+
+
+    /*
+      Mempercantik elemen yang dibuat
+      otomatis oleh html5-qrcode
+    */
+
+    #reader video {
+
+      border-radius: 15px;
+    }
+
+
+    #reader__scan_region {
+
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+
+    #reader__dashboard {
+
+      padding:
+        12px 5px 3px;
+    }
+
+
+    #reader__dashboard_section {
+
+      margin-top: 5px;
+    }
+
+
+    #reader button {
+
+      border: none;
+
+      border-radius: 10px;
+
+      padding:
+        10px 16px;
+
+      background: #173da8;
+
+      color: white;
+
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+
+    #reader select {
+
+      border-radius: 8px;
+
+      padding: 8px;
+
+      border:
+        1px solid #ccc;
+    }
+
+
+
+    /* =========================================
+       INSTRUKSI
+    ========================================== */
 
     .instruction {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #555;
+
+      margin:
+
+        17px
+        0
+        3px;
+
+      font-size: 15px;
+
+      color: #444;
+
+      line-height: 1.5;
     }
 
+
+
+    /* =========================================
+       RESULT
+    ========================================== */
+
     .result {
-      margin-top: 20px;
+
+      margin-top: 18px;
+
       padding: 15px;
 
       background: #e8f5e9;
+
       color: #2e7d32;
 
-      border-radius: 10px;
+      border-radius: 12px;
 
       display: none;
+
       word-break: break-word;
+
+      font-size: 14px;
     }
 
+
+
+    #token {
+
+      margin-top: 7px;
+
+      font-family: monospace;
+
+      font-weight: 700;
+    }
+
+
+
+    /* =========================================
+       ERROR
+    ========================================== */
+
     .error {
-      margin-top: 20px;
+
+      margin-top: 18px;
+
       padding: 15px;
 
       background: #ffebee;
+
       color: #c62828;
 
-      border-radius: 10px;
+      border-radius: 12px;
 
       display: none;
     }
-  </style>
-</head>
-
-<body>
-
-  <div class="card">
-
-    <h1>🗳️ E-VOTING OSIS</h1>
-
-    <p class="school">
-      SMAN 7 Tanjungpinang
-    </p>
-
-    <h3>Silakan Scan QR Anda</h3>
-
-    <!-- Tempat kamera -->
-    <div id="reader"></div>
-
-    <p class="instruction">
-      Arahkan QR Code ke kamera
-    </p>
-
-    <!-- Hasil scan -->
-    <div id="result" class="result">
-      <strong>QR berhasil dibaca!</strong>
-      <br><br>
-      Token:
-      <div id="token"></div>
-    </div>
-
-    <!-- Pesan error -->
-    <div id="error" class="error"></div>
-
-  </div>
 
 
-  <script>
 
-    function tampilkanHasil(token) {
+    /* =========================================
+       FOOTER
+    ========================================== */
 
-      document.getElementById("result").style.display = "block";
+    .footer {
 
-      document.getElementById("token").textContent = token;
+      margin-top: 18px;
+
+      text-align: center;
+
+      color: white;
+
+      font-size: 12px;
+
+      font-weight: 600;
+
+      text-shadow:
+        1px 2px 4px
+        rgba(0, 0, 0, 0.5);
+
+      opacity: 0.95;
+    }
+
+
+
+    /* =========================================
+       RESPONSIVE HP
+    ========================================== */
+
+    @media (max-width: 600px) {
+
+      body {
+
+        background-position:
+          center top;
+
+        background-attachment:
+          scroll;
+      }
+
+
+      .page {
+
+        padding:
+          20px
+          12px
+          30px;
+      }
+
+
+      .header {
+
+        margin-bottom: 15px;
+      }
+
+
+      .header-small {
+
+        font-size: 11px;
+
+        letter-spacing: 3px;
+      }
+
+
+      .header h1 {
+
+        font-size: 60px;
+
+        -webkit-text-stroke:
+          1.5px #173da8;
+      }
+
+
+      .header-subtitle {
+
+        font-size: 25px;
+      }
+
+
+      .school {
+
+        font-size: 18px;
+      }
+
+
+      .scanner-card {
+
+        padding: 15px;
+
+        border-radius: 22px;
+      }
+
+
+      .scanner-title {
+
+        font-size: 28px;
+
+        margin-bottom: 12px;
+      }
+
+
+      .instruction {
+
+        font-size: 14px;
+      }
 
     }
 
 
+
+    /* =========================================
+       HP SANGAT KECIL
+    ========================================== */
+
+    @media (max-width: 380px) {
+
+      .header h1 {
+
+        font-size: 50px;
+      }
+
+
+      .header-subtitle {
+
+        font-size: 22px;
+      }
+
+
+      .school {
+
+        font-size: 16px;
+      }
+
+
+      .scanner-card {
+
+        padding: 12px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+
+<body>
+
+
+  <main class="page">
+
+
+    <!-- =======================================
+         HEADER
+    ======================================== -->
+
+    <header class="header">
+
+      <div class="header-small">
+        E-VOTING OSIS
+      </div>
+
+
+      <h1>
+        PEMILIHAN
+      </h1>
+
+
+      <div class="header-subtitle">
+        KETUA &amp; WAKIL KETUA OSIS
+      </div>
+
+
+      <div class="school">
+        SMA NEGERI 7 TANJUNGPINANG
+      </div>
+
+    </header>
+
+
+
+    <!-- =======================================
+         SCANNER
+    ======================================== -->
+
+    <section class="scanner-card">
+
+
+      <div class="scanner-title">
+        SCAN QR CODE
+      </div>
+
+
+      <!-- Tempat kamera -->
+
+      <div id="reader"></div>
+
+
+      <p class="instruction">
+        Arahkan QR Code pemilih ke kamera
+      </p>
+
+
+      <!-- Hasil scan -->
+
+      <div
+        id="result"
+        class="result"
+      >
+
+        <strong>
+          QR berhasil dibaca!
+        </strong>
+
+        <br>
+        <br>
+
+        Token:
+
+        <div id="token"></div>
+
+      </div>
+
+
+      <!-- Pesan error -->
+
+      <div
+        id="error"
+        class="error">
+      </div>
+
+
+    </section>
+
+
+
+    <div class="footer">
+
+      Sistem E-Voting OSIS
+      <br>
+      SMA Negeri 7 Tanjungpinang
+
+    </div>
+
+
+  </main>
+
+
+
+  <!-- =========================================
+       JAVASCRIPT
+  ========================================== -->
+
+  <script>
+
+
+    /* =========================================
+       TAMPILKAN HASIL
+    ========================================== */
+
+    function tampilkanHasil(token) {
+
+      document.getElementById(
+        "result"
+      ).style.display = "block";
+
+
+      document.getElementById(
+        "token"
+      ).textContent = token;
+
+    }
+
+
+
+    /* =========================================
+       TAMPILKAN ERROR
+    ========================================== */
+
     function tampilkanError(pesan) {
 
-      const errorBox = document.getElementById("error");
+      const errorBox =
+        document.getElementById("error");
+
 
       errorBox.textContent = pesan;
+
 
       errorBox.style.display = "block";
 
     }
 
 
-let sedangDiproses = false;
 
-function onScanSuccess(decodedText, decodedResult) {
+    /* =========================================
+       STATUS PROSES
+    ========================================== */
 
-  // Mencegah QR terbaca berkali-kali
-  if (sedangDiproses) {
-    return;
-  }
-
-  sedangDiproses = true;
-
-  // Bersihkan token
-  const token = decodedText.trim();
-
-  // Tampilkan hasil sementara
-  tampilkanHasil(token);
-
-  // Tampilkan pesan
-  document.querySelector(".instruction").textContent =
-    "Memeriksa data pemilih...";
-
-  // Hentikan scanner
-  html5QrcodeScanner.clear()
-    .then(() => {
-
-      // URL Web App Apps Script
-      const webAppUrl =
-        "https://script.google.com/macros/s/AKfycbzBCToAq6dGhnG8uVX_bJaw3WP_SOmNxFDtMlwWFXTiEm2bpuGFA8zcdaqv-OK6lmwm4Q/exec";
-
-      // Pindahkan ke Apps Script dengan token
-      window.location.href =
-        webAppUrl +
-        "?token=" +
-        encodeURIComponent(token);
-
-    })
-    .catch((error) => {
-
-      console.error(error);
-
-      // Tetap lanjut ke validasi
-      const webAppUrl =
-        "https://script.google.com/macros/s/AKfycbzBCToAq6dGhnG8uVX_bJaw3WP_SOmNxFDtMlwWFXTiEm2bpuGFA8zcdaqv-OK6lmwm4Q/exec";
-
-      window.location.href =
-        webAppUrl +
-        "?token=" +
-        encodeURIComponent(token);
-
-    });
-
-}
+    let sedangDiproses = false;
 
 
-    function onScanFailure(error) {
 
-      // Jangan tampilkan error terus-menerus.
-      // Scanner memang akan menghasilkan banyak percobaan gagal
-      // sebelum QR berhasil terbaca.
+    /* =========================================
+       QR BERHASIL DIBACA
+    ========================================== */
+
+    function onScanSuccess(
+      decodedText,
+      decodedResult
+    ) {
+
+
+      // Mencegah QR terbaca berkali-kali
+
+      if (sedangDiproses) {
+
+        return;
+
+      }
+
+
+      sedangDiproses = true;
+
+
+
+      // Bersihkan token
+
+      const token =
+        decodedText.trim();
+
+
+
+      // Tampilkan hasil sementara
+
+      tampilkanHasil(token);
+
+
+
+      // Ubah instruksi
+
+      document.querySelector(
+        ".instruction"
+      ).textContent =
+        "Memeriksa data pemilih...";
+
+
+
+      // Hentikan scanner
+
+      html5QrcodeScanner
+        .clear()
+
+
+        .then(() => {
+
+
+          // URL Web App Apps Script
+
+          const webAppUrl =
+            "https://script.google.com/macros/s/AKfycbzBCToAq6dGhnG8uVX_bJaw3WP_SOmNxFDtMlwWFXTiEm2bpuGFA8zcdaqv-OK6lmwm4Q/exec";
+
+
+          // Pindahkan ke Apps Script
+
+          window.location.href =
+            webAppUrl +
+            "?token=" +
+            encodeURIComponent(token);
+
+        })
+
+
+        .catch((error) => {
+
+
+          console.error(error);
+
+
+          // Tetap lanjut ke validasi
+
+          const webAppUrl =
+            "https://script.google.com/macros/s/AKfycbzBCToAq6dGhnG8uVX_bJaw3WP_SOmNxFDtMlwWFXTiEm2bpuGFA8zcdaqv-OK6lmwm4Q/exec";
+
+
+          window.location.href =
+            webAppUrl +
+            "?token=" +
+            encodeURIComponent(token);
+
+        });
 
     }
 
 
-    // Membuat QR scanner
-    const html5QrcodeScanner = new Html5QrcodeScanner(
-      "reader",
-      {
-        fps: 10,
-        qrbox: {
-          width: 250,
-          height: 250
-        }
-      },
-      false
-    );
+
+    /* =========================================
+       QR GAGAL DIBACA
+    ========================================== */
+
+    function onScanFailure(error) {
+
+      /*
+        Tidak perlu menampilkan error.
+        Scanner memang melakukan banyak
+        percobaan sebelum QR berhasil dibaca.
+      */
+
+    }
 
 
-    // Jalankan scanner
+
+    /* =========================================
+       MEMBUAT QR SCANNER
+    ========================================== */
+
+    const html5QrcodeScanner =
+      new Html5QrcodeScanner(
+
+        "reader",
+
+        {
+
+          fps: 10,
+
+          qrbox: {
+
+            width: 250,
+
+            height: 250
+
+          }
+
+        },
+
+        false
+
+      );
+
+
+
+    /* =========================================
+       JALANKAN SCANNER
+    ========================================== */
+
     html5QrcodeScanner.render(
+
       onScanSuccess,
+
       onScanFailure
+
     );
+
 
   </script>
 
+
 </body>
+
 </html>
